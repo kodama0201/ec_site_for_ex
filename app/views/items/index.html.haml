@@ -1,0 +1,59 @@
+%p#notice= notice
+%h1 Listing Items
+- if current_user
+  ログインユーザー用
+- else
+  非ログインユーザー用
+= link_to 'ログアウト', destroy_user_session_path, class: 'btn btn-danger', method: :delete
+- if current_user
+  = link_to 'ログアウト', destroy_user_session_path, class: 'btn btn-danger', method: :delete
+- else
+  = link_to '新規登録', new_user_registration_path, class: 'btn btn-danger'
+  = link_to 'ログイン', new_user_session_path, class: 'btn btn-primary'
+%p
+  現在のユーザーの数は#{User.count}人
+- User.all.each do |user|
+  %p= user.email
+.col-md-4
+  = image_tag "1.jpg" , width: '200px'
+  = image_tag "2.jpg" , width: '200px'
+  = image_tag "3.jpg" , width: '200px'
+  = image_tag "4.jpg" , width: '200px'
+- if false
+  .row
+    - @items.each do |item|
+      .col-md-4
+        = item.name
+        = image_tag "coffee.jpg", width: '200px'
+        = item.price
+        = item.stock
+        = link_to '購入', purchase_item_path(item), class: "btn btn-default", data: { confirm: '購入しますか？' }
+        = link_to 'Show', item, class: "btn btn-default"
+        = link_to 'Edit', edit_item_path(item), class: "btn btn-default"
+        = link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-danger"
+      .col-md-4
+        = item.name
+        = image_tag "coffee.jpg", width: '200px'
+        = item.price
+        = item.stock
+        = link_to '購入', purchase_item_path(item), class: "btn btn-default", data: { confirm: '購入しますか？' }
+        = link_to 'Show', item, class: "btn btn-default"
+        = link_to 'Edit', edit_item_path(item), class: "btn btn-default"
+        = link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-danger"
+%table
+  %thead
+    %tr
+      %th Name
+      %th Price
+      %th{:colspan => "3"}
+  %tbody
+    - @items.each do |item|
+      %tr
+        %td= item.name
+        %td= item.price
+        %td= item.stock
+        %td= link_to '購入', purchase_item_path(item) , class: "btn btn-danger" , data: { confirm: '本当に購入しますか？'}
+        %td= link_to 'Edit', edit_item_path(item)  , class: "btn btn-danger" , data: { confirm: 'まじですか？'}
+        %td= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' }  , class: "btn btn-danger"
+%br/
+= link_to 'New Item', new_item_path
